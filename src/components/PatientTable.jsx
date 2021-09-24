@@ -139,7 +139,7 @@ function PatientTable({ data, page, length, pageCnt }) {
       setbefOrderCol(orderCol);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [befOrderCol, toggle]
+    [befOrderCol, toggle, filterVal]
   );
 
   return (
