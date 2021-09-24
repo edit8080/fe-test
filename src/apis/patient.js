@@ -8,13 +8,15 @@ import axios from "axios";
  */
 export const getPatients = async (filters) => {
   try {
-    let query = "";
-    Object.keys(filters).map((key) =>
-      key ? (query += `?${key}=${filters[key]}`) : ""
+    let querySet = [];
+    Object.keys(filters).map(
+      (key) => key && querySet.push(`${key}=${filters[key]}`)
     );
 
+    let query = querySet.join("&");
+
     const patients = await axios.get(
-      `${process.env.API_SERVER}/api/patient/list${query}`
+      `${process.env.API_SERVER}/api/patient/list?${query}`
     );
 
     return patients.data;
