@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
 import DataTable from "@components/DataTable";
-import SelectBox from "@components/SelectBox";
+import PatientPageSelectBox from "@components/PatientPageSelectBox";
 import { fetchPatients } from "@modules/patient";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -22,10 +22,10 @@ function App() {
     isDeath: "사망 여부",
   };
 
-  const selectVal = [
+  const selectItem = [
     { val: 10, innerText: "10개씩 보이기" },
     { val: 20, innerText: "20개씩 보이기" },
-    { val: 30, innerText: "30개씩 보이기" },
+    { val: 40, innerText: "40개씩 보이기" },
   ];
 
   useEffect(() => {
@@ -39,7 +39,7 @@ function App() {
 
   return (
     <div className="App">
-      <SelectBox selectVal={selectVal} />
+      <PatientPageSelectBox page={page} selectItem={selectItem} />
       <DataTable
         categories={patientsCategory}
         data={dataList}
