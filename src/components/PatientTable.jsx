@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import DataTable from "@components/DataTable";
@@ -10,13 +10,25 @@ import { fetchPatients } from "@modules/patient";
 function PatientTable({ data, page, length, pageCnt }) {
   const {
     filterList: { genderList, raceList, ethnicityList, isDeathList },
-    checkVal: { gender, minAge, maxAge, race, ethnicity, isDeath },
+    filterVal,
   } = useSelector((state) => state.filterListReducer);
 
   const dispatch = useDispatch();
 
   const [befOrderCol, setbefOrderCol] = useState("");
   const [toggle, setToggle] = useState(true);
+
+  // 변경된 필터값으로 데이터 Fetch
+  useEffect(() => {
+    dispatch(
+      fetchPatients({
+        page,
+        length,
+        ...filterVal,
+      })
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filterVal]);
 
   const patientsCategory = [
     {
@@ -31,7 +43,7 @@ function PatientTable({ data, page, length, pageCnt }) {
       filter: (
         <TableRadioFilter
           list={genderList}
-          checkVal={gender}
+          checkVal={filterVal.gender}
           category="gender"
           checkFilter={checkFilter}
         />
@@ -51,15 +63,15 @@ function PatientTable({ data, page, length, pageCnt }) {
           <input
             type="number"
             id="minAge"
-            defaultValue={minAge}
-            onChange={(e) => dispatch(checkFilter("minAge", e.target.value))}
+            defaultValue={filterVal.age_min}
+            onChange={(e) => dispatch(checkFilter("age_min", e.target.value))}
           />
           ~
           <input
             type="number"
             id="maxAge"
-            defaultValue={maxAge}
-            onChange={(e) => dispatch(checkFilter("maxAge", e.target.value))}
+            defaultValue={filterVal.age_max}
+            onChange={(e) => dispatch(checkFilter("age_max", e.target.value))}
           />
         </form>
       ),
@@ -71,7 +83,7 @@ function PatientTable({ data, page, length, pageCnt }) {
       filter: (
         <TableRadioFilter
           list={raceList}
-          checkVal={race}
+          checkVal={filterVal.race}
           category="race"
           checkFilter={checkFilter}
         />
@@ -84,7 +96,7 @@ function PatientTable({ data, page, length, pageCnt }) {
       filter: (
         <TableRadioFilter
           list={ethnicityList}
-          checkVal={ethnicity}
+          checkVal={filterVal.ethnicity}
           category="ethnicity"
           checkFilter={checkFilter}
         />
@@ -97,14 +109,15 @@ function PatientTable({ data, page, length, pageCnt }) {
       filter: (
         <TableRadioFilter
           list={isDeathList}
-          checkVal={isDeath}
-          category="isDeath"
+          checkVal={filterVal.death}
+          category="death"
           checkFilter={checkFilter}
         />
       ),
     },
   ];
 
+  // 표 정렬 기능 (헤더 클릭)
   const theadSort = useCallback(
     (e) => {
       const thead = e.target.closest("th");
@@ -120,11 +133,13 @@ function PatientTable({ data, page, length, pageCnt }) {
           length,
           order_column: orderCol,
           order_desc: toggle,
+          ...filterVal,
         })
       );
       setbefOrderCol(orderCol);
     },
-    [befOrderCol, dispatch, length, page, toggle]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [befOrderCol, toggle]
   );
 
   return (
@@ -139,6 +154,7 @@ function PatientTable({ data, page, length, pageCnt }) {
         length={length}
         pageCnt={pageCnt}
         changePage={(filter) => dispatch(fetchPatients(filter))}
+        filterVal={filterVal}
       />
     </>
   );

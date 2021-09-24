@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 
 import { Pagination } from "react-bootstrap";
 
-function TablePagination({ length, pageCnt, changePage }) {
+function TablePagination({ length, pageCnt, changePage, filterVal }) {
   const [active, setActive] = useState(1); // 현재 활성화된 페이지
   const [range, setRange] = useState(1); // 페이지 범위
   const [pageNums, setPageNums] = useState([]); // 페이지 번호
@@ -30,9 +30,10 @@ function TablePagination({ length, pageCnt, changePage }) {
     changePage({
       page: active,
       length,
+      ...filterVal,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [active, length]);
+  }, [active, length, filterVal]);
 
   // << 클릭
   const firstPageClick = useCallback(() => {

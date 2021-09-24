@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 
 import SelectBox from "@components/SelectBox";
-import { fetchPatients } from "../modules/patient";
+import { fetchPatients } from "@modules/patient";
 import { useDispatch } from "react-redux";
 
 /**
