@@ -10,7 +10,8 @@ export const getPatients = async (filters) => {
   try {
     let querySet = [];
     Object.keys(filters).map(
-      (key) => key && querySet.push(`${key}=${filters[key]}`)
+      (key) =>
+        key && filters[key] !== "" && querySet.push(`${key}=${filters[key]}`)
     );
 
     let query = querySet.join("&");

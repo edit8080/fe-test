@@ -13,7 +13,7 @@ export const fetchFilterList = () => async (dispatch) => {
     const gender = await getGenderList();
     const race = await getRaceList();
     const ethnicity = await getEthnicityList();
-    const isDeathList = ["T", "F"];
+    const isDeathList = ["Y", "N"];
 
     dispatch({
       type: FILTER_LIST_FETCH,
@@ -45,13 +45,13 @@ const initialState = {
     ethnicityList: [],
     isDeathList: [],
   },
-  checkVal: {
+  filterVal: {
     gender: "",
-    minAge: 0,
-    maxAge: 200,
+    age_min: 0,
+    age_max: 200,
     race: "",
     ethnicity: "",
-    isDeath: "",
+    death: "",
   },
   error: false,
 };
@@ -73,8 +73,8 @@ export default function filterListReducer(state = initialState, action) {
     case FILTER_CHECK:
       return {
         ...state,
-        checkVal: {
-          ...state.checkVal,
+        filterVal: {
+          ...state.filterVal,
           ...action.check,
         },
       };

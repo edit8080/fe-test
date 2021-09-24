@@ -19,7 +19,7 @@ export const fetchPatients = (filters) => async (dispatch) => {
     patientsData.patient.list = patientsData.patient.list.map((item) => ({
       ...item,
       birthDatetime: dateFormat(item.birthDatetime),
-      isDeath: item.isDeath ? "T" : "F",
+      isDeath: item.isDeath ? "Y" : "N",
     }));
 
     dispatch({
