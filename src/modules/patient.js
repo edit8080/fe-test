@@ -22,7 +22,11 @@ export const fetchPatients = (filters) => async (dispatch) => {
       isDeath: item.isDeath ? "T" : "F",
     }));
 
-    dispatch({ type: PATIENT_FETCH, ...patientsData.patient });
+    dispatch({
+      type: PATIENT_FETCH,
+      ...patientsData.patient,
+      length: filters.length,
+    });
   } catch (e) {
     dispatch({ type: ERROR, error: e });
   }
@@ -32,7 +36,8 @@ const initialState = {
   loading: false,
   dataList: [],
   page: 1,
-  totalLength: 0,
+  length: 10,
+  totalLength: 10,
   error: false,
 };
 
@@ -48,6 +53,7 @@ export default function patientReducer(state = initialState, action) {
         loading: false,
         dataList: action.list,
         page: action.page,
+        length: action.length,
         totalLength: action.totalLength,
         error: false,
       };
