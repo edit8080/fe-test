@@ -1,5 +1,6 @@
+import { OverlayTrigger, Popover, Table } from "react-bootstrap";
+
 import React from "react";
-import { Table } from "react-bootstrap";
 
 function DataTable({ categories, data, keyID, theadSort }) {
   return (
@@ -11,6 +12,19 @@ function DataTable({ categories, data, keyID, theadSort }) {
             {categories.map((category, idx) => (
               <th key={idx} data-id={category.val}>
                 {category.text}
+                {category.filter && (
+                  <OverlayTrigger
+                    trigger="click"
+                    placement="bottom"
+                    overlay={
+                      <Popover>
+                        <Popover.Body>{category.filter}</Popover.Body>
+                      </Popover>
+                    }
+                  >
+                    <span>📌</span>
+                  </OverlayTrigger>
+                )}
               </th>
             ))}
           </tr>
