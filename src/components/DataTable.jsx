@@ -27,7 +27,6 @@ function DataTable({ categories, data, keyID }) {
           })}
         </tbody>
       </Table>
-      <TablePagination />
     </>
   );
 }

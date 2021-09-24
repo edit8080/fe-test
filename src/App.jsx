@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
 function App() {
-  const { loading, dataList, page, error } = useSelector(
+  const { loading, dataList, page, length, totalLength, error } = useSelector(
     (state) => state.patientReducer
   );
   const dispatch = useDispatch();
@@ -24,7 +24,7 @@ function App() {
   return (
     <div className="App">
       <PatientPageSelectBox page={page} />
-      <PatientTable data={dataList} />
+      <PatientTable data={dataList} pageCnt={Math.ceil(totalLength / length)} />
     </div>
   );
 }

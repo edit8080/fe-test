@@ -1,7 +1,11 @@
-import DataTable from "./DataTable";
+import DataTable from "@components/DataTable";
 import React from "react";
+import TablePagination from "./TablePagination";
+import { fetchPatients } from "../modules/patient";
+import { useDispatch } from "react-redux";
 
-function PatientTable({ data }) {
+function PatientTable({ data, pageCnt }) {
+  const dispatch = useDispatch();
   const patientsCategory = {
     personID: "환자 ID",
     gender: "성별",
@@ -13,7 +17,13 @@ function PatientTable({ data }) {
   };
 
   return (
-    <DataTable categories={patientsCategory} data={data} keyID="personID" />
+    <>
+      <DataTable categories={patientsCategory} data={data} keyID="personID" />
+      <TablePagination
+        pageCnt={pageCnt}
+        changePage={(page) => dispatch(fetchPatients({ page }))}
+      />
+    </>
   );
 }
 export default PatientTable;
