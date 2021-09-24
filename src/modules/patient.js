@@ -37,7 +37,7 @@ const initialState = {
   dataList: [],
   page: 1,
   length: 10,
-  totalLength: 100,
+  totalLength: 1000,
   error: false,
 };
 

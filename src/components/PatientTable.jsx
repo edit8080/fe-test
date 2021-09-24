@@ -4,8 +4,9 @@ import TablePagination from "./TablePagination";
 import { fetchPatients } from "../modules/patient";
 import { useDispatch } from "react-redux";
 
-function PatientTable({ data, pageCnt }) {
+function PatientTable({ data, length, pageCnt }) {
   const dispatch = useDispatch();
+
   const patientsCategory = {
     personID: "환자 ID",
     gender: "성별",
@@ -20,8 +21,9 @@ function PatientTable({ data, pageCnt }) {
     <>
       <DataTable categories={patientsCategory} data={data} keyID="personID" />
       <TablePagination
+        length={length}
         pageCnt={pageCnt}
-        changePage={(page) => dispatch(fetchPatients({ page }))}
+        changePage={(filter) => dispatch(fetchPatients(filter))}
       />
     </>
   );

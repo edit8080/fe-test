@@ -24,7 +24,11 @@ function App() {
   return (
     <div className="App">
       <PatientPageSelectBox page={page} />
-      <PatientTable data={dataList} pageCnt={Math.ceil(totalLength / length)} />
+      <PatientTable
+        data={dataList}
+        length={length}
+        pageCnt={Math.ceil(totalLength / length)}
+      />
     </div>
   );
 }
