@@ -1,11 +1,11 @@
 import { Form } from "react-bootstrap";
 import React from "react";
 
-function SelectBox({ selectVal }) {
+function SelectBox({ onChange, selectItem }) {
   return (
-    <Form.Select>
-      {selectVal.map((item) => (
-        <option key={item.val} val={item.val}>
+    <Form.Select onChange={onChange}>
+      {selectItem.map((item) => (
+        <option key={item.val} value={item.val}>
           {item.innerText}
         </option>
       ))}
