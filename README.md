@@ -15,6 +15,8 @@ $ yarn
 ### 2) .env 파일 구성
 
 API 서버 주소 유출 방지를 위해 .env 파일을 사용하였습니다.
+따라서 git clone 이후 .env 파일 구성이 필요합니다.
+.env 파일 내용은 다음과 같습니다.
 
 ```text
 API_SERVER = API 서버 주소 입력
@@ -24,6 +26,7 @@ API_SERVER = API 서버 주소 입력
 
 본 프로젝트는 webpack을 통해 번들링을 구성하였습니다.
 프로젝트 실행에는 webpack-dev-server를 사용합니다.
+필요한 스크립트 명령어는 이미 구성되었습니다.
 
 ```bash
 // npm 사용 시
