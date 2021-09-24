@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import { Container } from "react-bootstrap";
 import DataTable from "@components/DataTable";
 import TablePagination from "@components/TablePagination";
 import TableRadioFilter from "@components/TableRadioFilter";
@@ -150,12 +151,14 @@ function PatientTable({ data, page, length, pageCnt }) {
         keyID="personID"
         theadSort={theadSort}
       />
-      <TablePagination
-        length={length}
-        pageCnt={pageCnt}
-        changePage={(filter) => dispatch(fetchPatients(filter))}
-        filterVal={filterVal}
-      />
+      <Container className="d-flex justify-content-center">
+        <TablePagination
+          length={length}
+          pageCnt={pageCnt}
+          changePage={(filter) => dispatch(fetchPatients(filter))}
+          filterVal={filterVal}
+        />
+      </Container>
     </>
   );
 }
