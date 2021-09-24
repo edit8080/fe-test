@@ -1,70 +1,100 @@
-# Getting Started with Create React App
+# 프론트엔드 API 연동 프로젝트
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 1. 실행하기
 
-## Available Scripts
+### 1) 패키지 다운로드
 
-In the project directory, you can run:
+```bash
+// npm 사용 시
+$ npm install
 
-### `yarn start`
+// yarn 사용 시
+$ yarn
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### 2) .env 파일 구성
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+API 서버 주소 유출 방지를 위해 .env 파일을 사용하였습니다.
 
-### `yarn test`
+```text
+API_SERVER = API 서버 주소 입력
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 3) Webpack 서버 실행
 
-### `yarn build`
+본 프로젝트는 webpack을 통해 번들링을 구성하였습니다.
+프로젝트 실행에는 webpack-dev-server를 사용합니다.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+// npm 사용 시
+$ npm start
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+// yarn 사용 시
+$ yarn start
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+이후 localhost:8080으로 접속합니다.
 
-### `yarn eject`
+## 2. 프로젝트 진행 우선순위 설정
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+1. 프로젝트 설계
+2. 필요 프로젝트 패키지 정리
+3. 프로젝트 폴더 구조 설정
+4. Webpack 환경 구성
+5. API 데이터 Fetch 로직 구현
+6. Redux를 통한 데이터 상태 관리 로직 구현
+7. 재사용성을 고려한 컴포넌트를 기준으로 구현
+8. 데이터와 컴포넌트를 연결하는 매개 컴포넌트 구현
+9. 발견 버그 수정
+10. 스타일 설정
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 3. 프로젝트 구현 내용
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+1. 환자 정보를 탐색할 수 있는 테이블 Component 생성 완료 (환자 ID, 성별, 생년월일, 나이, 인종, 민족, 사망 여부 제공)
+2. 페이징 기능 추가 완료
+3. 컬럼 정렬 기능 추가 완료 (환자ID, 성별, 생년월일, 인종, 민족, 사망 여부 기준)
+4. 필터 기능 추가 완료 (성별, 나이, 인종, 민족, 사망 여부 기준)
+5. 차트 일부 추가 완료 (단일 속성과 관련된 Pie Chart 구성)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## 4. 미구현점 & 버그
 
-## Learn More
+### 1) 미구현점
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. 환자 상세 정보 제공
+2. 다중 속성 Pie Chart 구성
+3. 필터 설정에 따른 Pie Chart 변화
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 2) 버그
 
-### Code Splitting
+1. 페이지네이션 초기화 버그 <br/>
+ : 마지막 페이지네이션 이동 후 페이지 row 변경 또는 필터 설정 시 페이지가 기존 범위를 벗어나 데이터가 보이지 않는 문제 발생
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+2. 정렬과 필터링 간 클릭 이벤트 버그 <br />
+ : 정렬을 수행하는 테이블 헤더부와 필터 메뉴 간에 클릭 이벤트가 중첩되는 문제 발생
 
-### Analyzing the Bundle Size
+### 3) 개선계획
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+1. 환자 상세 정보 제공 기능 구성 해결 <br />
+   a) 환자 관련 컬럼(tr)에 환자의 ID를 `data-id`로 저장합니다. <br />
+   b) 
 
-### Making a Progressive Web App
+2. 다중 속성 Pie Chart 구성 <br />
+   a) 현재 단일 속성에 대한 `stats` 내 필요 데이터를 카운팅하는 로직을 추가하였습니다. <br />
+   b) 해당 과정에 기반하여 다중 속성에 대한 `stats` 내 데이터를 카운팅하는 로직을 작성합니다. <br />
+   c) 다중 속성에 기반해 데이터를 필터링을 진행하고 난 후 해당 데이터를 통해 Pie Chart를 구성하는 것으로 해결할 수 있다고 생각합니다. <br />
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+3. 필터 설정에 따른 Pie Chart 변화 <br />
+   a) 사용자가 지정한 필터 옵션과 관련된 상태 로직을 따로 저장해두었습니다. <br />
+   b) 해당 상태를 활용하여 `stats` 데이터를 필터링하는 로직을 추가하는 것으로 해결할 수 있다고 생각합니다. <br />
 
-### Advanced Configuration
+4. 페이지네이션 관련 버그 -> 페이지네이션 상태 로직 분리 <br />
+   a) 페이지네이션과 관련된 상태 로직이 분리되지 않아 페이지네이션과 관련된 버그가 많이 발생했다고 생각합니다. <br />
+   b) 추후 페이지네이션 관련 상태를 분리하는 것으로 페이징, 정렬, 필터 기능이 원활하게 동작하도록 변경할 예정입니다.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+5. 정렬 / 필터링 클릭 이벤트 버그 <br />
+   a) 테이블 헤더부에 얽혀있는 이벤트 전파 로직을 수정할 필요가 있다고 생각합니다. <br />
+   b) 정렬과 필터링 이벤트 로직을 확인하여 이벤트 로직을 효율적으로 개선할 예정입니다. <br />
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+6. 스타일 개선 <br />
+   a) 레이아웃 개선 <br />
+   b) 정렬 표시 스타일 추가 <br />
