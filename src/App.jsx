@@ -26,6 +26,7 @@ function App() {
       <PatientPageSelectBox page={page} />
       <PatientTable
         data={dataList}
+        page={page}
         length={length}
         pageCnt={Math.ceil(totalLength / length)}
       />

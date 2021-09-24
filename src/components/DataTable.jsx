@@ -1,16 +1,17 @@
 import React from "react";
 import { Table } from "react-bootstrap";
-import TablePagination from "@components/TablePagination";
 
-function DataTable({ categories, data, keyID }) {
+function DataTable({ categories, data, keyID, theadSort }) {
   return (
     <>
       <Table striped bordered hover size="sm">
-        <thead>
+        <thead onClick={theadSort}>
           <tr>
-            <th>#</th>
-            {Object.keys(categories).map((key, idx) => (
-              <th key={idx}>{categories[key]}</th>
+            <th data-id="num">#</th>
+            {categories.map((category, idx) => (
+              <th key={idx} data-id={category.val}>
+                {category.text}
+              </th>
             ))}
           </tr>
         </thead>
@@ -19,8 +20,8 @@ function DataTable({ categories, data, keyID }) {
             return (
               <tr key={d[keyID]}>
                 <td>{idx + 1}</td>
-                {Object.keys(categories).map((key, idx) => (
-                  <td key={idx}>{d[key]}</td>
+                {categories.map((category, idx) => (
+                  <td key={idx}>{d[category.attr]}</td>
                 ))}
               </tr>
             );
